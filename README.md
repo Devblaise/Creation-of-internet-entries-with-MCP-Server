@@ -56,7 +56,7 @@ It also includes:
 2. Fork the repo or click **Code → Download ZIP**
 3. Extract the ZIP to a folder if downloaded
 
-### 2. Install uv
+### 2. Install uv (Recommended)
 
 **macOS/Linux:**
 ```bash
@@ -123,8 +123,6 @@ Opens at `http://localhost:8000`. where you view generated outputs
 
 
 ### With Docker (alternative)
-
-Docker avoids OS/Windows compatibility issues that can occur with uv.
 
 - **Linux:** You only need the Docker Engine (`sudo apt install docker.io` or similar) — no Desktop app required.
 - **Windows:** Install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) — uses WSL 2 or Hyper-V.
