@@ -135,13 +135,13 @@ Once installed, verify with: `docker --version`
 
 ```bash
 cd "BA Creation of internet entries with MCP Server"
-docker build -t mcp-text-generator .
+docker build -t creation-of-internet-entries-with-mcp-server .
 ```
 
 #### Run the MCP server (with Inspector UI)
 
 ```bash
-docker run -p 6274:6274 --env-file .env mcp-text-generator \
+docker run -p 6274:6274 --env-file .env creation-of-internet-entries-with-mcp-server \
   uv run mcp dev src/server.py --host 0.0.0.0
 ```
 
@@ -160,7 +160,7 @@ The project ID corresponds to the **Abkürzung** column in the Excel file. The l
 #### Run the output dashboard
 
 ```bash
-docker run -p 8000:8000 --env-file .env mcp-text-generator
+docker run -p 8000:8000 --env-file .env creation-of-internet-entries-with-mcp-server
 ```
 
 Opens at `http://localhost:8000`.
