@@ -10,13 +10,15 @@ WORKDIR /app
 COPY pyproject.toml uv.lock ./
 
 # Install dependencies into the project virtual environment
-RUN uv sync --frozen --no-dev --no-install-project
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev --no-install-project
 
 # Copy the rest of the application
 COPY . .
 
 # Install the project itself
-RUN uv sync --frozen --no-dev
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
 
 # ── Stage 2: runtime ───────────────────────────────────────
 FROM python:3.12-slim
@@ -32,6 +34,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Expose the FastAPI dashboard port
 EXPOSE 8000
 
-# Default: run the FastAPI dashboard
+# Default: run the FastAPI UI output dashboard
 # Override with: docker run ... <image> uv run mcp dev src/server.py
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
