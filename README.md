@@ -44,8 +44,9 @@ It also includes:
 
 - Python 3.12+
 - [uv](https://docs.astral.sh/uv/) package manager
-- Access to a GWDG API key (OpenAI-compatible endpoint) or Alternative API key (OPEN_AI, Gemini..)
-- GWDG key usage documentation (https://docs.hpc.gwdg.de/services/saia/index.html)
+- Access to a GWDG API key (OpenAI-compatible endpoint) or alternative API key (OpenAI, Gemini, etc.)
+- GWDG key usage documentation: https://docs.hpc.gwdg.de/services/saia/index.html
+
 
 ## Installation
 
@@ -72,12 +73,22 @@ powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | ie
 
 ### 3. Set up the project
 
+**With uv
 ```bash
-cd BA Creation of internet entries with MCP Server
+cd "BA Creation of internet entries with MCP Server"
+```
+```
 uv venv
+```
+```bash
+.venv\Scripts\activate  # for windows
+```
+```bash
+source .venv/bin/activate  # mac and linux users
+```
+```
 uv sync
 ```
-
 ### 4. Configure environment variables
 
 Create a `.env` file in the project root:
@@ -96,6 +107,45 @@ uv run mcp dev src/server.py
 ```
 
 This opens the MCP Inspector at `http://localhost:6274` where you can test the tools interactively.
+
+
+**With Docker (alternative — avoids OS/Windows compatibility issues that can occur with uv):**
+```
+macOS: Install Docker Desktop for Mac — it runs a lightweight Linux VM behind the scenes.
+```
+```
+Linux: You only need the Docker Engine (sudo apt install docker.io or similar) — no Desktop app required.
+```
+```
+Windows: Install Docker Desktop for Windows — uses WSL 2 or Hyper-V.
+```
+Once installed, verify with: `docker --version`
+
+```bash
+cd "BA Creation of internet entries with MCP Server"
+docker build -t mcp-text-generator .
+```
+
+### Build the image
+
+```bash
+docker build -t mcp-text-generator .
+```
+
+### Run the FastAPI dashboard
+
+```bash
+docker run -p 8000:8000 --env-file .env mcp-text-generator
+```
+
+Opens at `http://localhost:8000`.
+
+### Run the MCP server instead
+
+```bash
+docker run -p 6274:6274 --env-file .env mcp-text-generator \
+  uv run mcp dev src/server.py --host 0.0.0.0
+```
 
 ### Generate text for a project
 
@@ -140,3 +190,5 @@ Place reference texts as `.txt` files in `src/data/references/` named by the pro
 - **FastAPI + Jinja2** — Results output data dashboard
 - **Pandas** — Excel data processing
 - **Pydantic** — Input/output validation
+- **Docker** — Containerization
+
