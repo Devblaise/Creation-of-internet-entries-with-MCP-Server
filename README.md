@@ -101,6 +101,7 @@ Create a `.env` file in the project root:
 GWDG_API_KEY=your_api_key_here
 GWDG_API_BASE=your_api_base_url_here
 ```
+Add excel data file in filepath: ``` src/data/<excel_data> ```
 
 ## Usage
 
