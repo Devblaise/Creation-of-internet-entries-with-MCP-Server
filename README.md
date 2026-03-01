@@ -50,14 +50,11 @@ It also includes:
 
 ## Installation
 
-### 1. Set up the project
+### 1. Get the source code
 
-```bash
-Go to repo → (https://github.com/Devblaise/Creation-of-internet-entries-with-MCP-Server)
-fork repo or Download ZIP
-Extract the ZIP to a folder if Downloaded
-```
-
+1. Go to the repository: https://github.com/Devblaise/Creation-of-internet-entries-with-MCP-Server
+2. Fork the repo or click **Code → Download ZIP**
+3. Extract the ZIP to a folder if downloaded
 
 ### 2. Install uv
 
@@ -71,24 +68,31 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### 3. Set up the project
+### 3. Install dependencies
 
-**With uv**
 ```bash
 cd "BA Creation of internet entries with MCP Server"
-```
-```
 uv venv
 ```
+
+Activate the virtual environment:
+
 ```bash
-.venv\Scripts\activate   # windows
+# macOS/Linux
+source .venv/bin/activate
 ```
+
+```powershell
+# Windows (PowerShell)
+.venv\Scripts\activate
+```
+
+Then install all dependencies:
+
 ```bash
-source .venv/bin/activate  # linux 
-```
-```
 uv sync
 ```
+
 ### 4. Configure environment variables
 
 Create a `.env` file in the project root:
@@ -118,37 +122,30 @@ Opens at `http://localhost:8000`.
 
 
 
-### With Docker 
-**(alternative — avoids OS/Windows compatibility issues that can occur with uv):**
+### With Docker (alternative)
 
-```
-Linux: You only need the Docker Engine (sudo apt install docker.io or similar) — no Desktop app required.
-```
-```
-Windows: Install Docker Desktop for Windows — uses WSL 2 or Hyper-V.
-```
+Docker avoids OS/Windows compatibility issues that can occur with uv.
+
+- **Linux:** You only need the Docker Engine (`sudo apt install docker.io` or similar) — no Desktop app required.
+- **Windows:** Install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) — uses WSL 2 or Hyper-V.
 
 Once installed, verify with: `docker --version`
+
+#### Build the image
 
 ```bash
 cd "BA Creation of internet entries with MCP Server"
 docker build -t mcp-text-generator .
 ```
 
-### Build the image
-
-```bash
-docker build -t mcp-text-generator .
-```
-
-### Run the MCP server (with Inspector UI) 
+#### Run the MCP server (with Inspector UI)
 
 ```bash
 docker run -p 6274:6274 --env-file .env mcp-text-generator \
   uv run mcp dev src/server.py --host 0.0.0.0
 ```
 
-### Generate text for a project
+#### Generate text for a project
 
 In the MCP Inspector, call the `generate_project_text_from_project_id` tool with:
 
@@ -160,7 +157,7 @@ In the MCP Inspector, call the `generate_project_text_from_project_id` tool with
 
 The project ID corresponds to the **Abkürzung** column in the Excel file. The lookup is case-insensitive.
 
-### Run to display Output UI dashboard
+#### Run the output dashboard
 
 ```bash
 docker run -p 8000:8000 --env-file .env mcp-text-generator
@@ -168,8 +165,7 @@ docker run -p 8000:8000 --env-file .env mcp-text-generator
 
 Opens at `http://localhost:8000`.
 
-
-### View results in the dashboard showing
+### View results in the dashboard
 
 - Side-by-side German/English generated texts
 - Semantic similarity evaluation scores
