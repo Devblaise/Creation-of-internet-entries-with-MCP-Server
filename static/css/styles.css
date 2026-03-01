@@ -47,12 +47,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-
     margin: 0.7rem 0 0.15rem;
     line-height: 1.2;
 }
-.text-content .section-header .section-lead {
-    color: #1565c0;
-    font-weight: 700;
-    margin-right: 0.35rem;
-    display: inline-block;
-}
 
 /* Two-column layout */
 .columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }

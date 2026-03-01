@@ -61,7 +61,7 @@
                     <div class="text-content">
                         {% for block in blocks %}
                             {% if block.type == 'header' %}
-                                <h3 class="section-header"><span class="section-lead">{{ block.lead }}</span>{% if block.rest %} {{ block.rest }}{% endif %}</h3>
+                                <h3 class="section-header">{{ block.title }}</h3>
                                 {% if block.body %}
                                     <p>{{ block.body }}</p>
                                 {% endif %}
@@ -95,7 +95,18 @@
                             <div class="label">Level</div>
                         </div>
                     </div>
-                    <div class="text-content">{{ entry.text }}</div>
+                    <div class="text-content">
+                        {% for block in faculty_teaser_blocks.get(lang, []) %}
+                            {% if block.type == 'header' %}
+                                <h3 class="section-header">{{ block.title }}</h3>
+                                {% if block.body %}
+                                    <p>{{ block.body }}</p>
+                                {% endif %}
+                            {% else %}
+                                <p>{{ block.text }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
                 {% endfor %}
             </div>
