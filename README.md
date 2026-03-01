@@ -56,7 +56,7 @@ It also includes:
 2. Fork the repo or click **Code → Download ZIP**
 3. Extract the ZIP to a folder if downloaded
 
-### 2. Install uv (Recommended)
+### 2. Install UV (Recommended)
 
 **macOS/Linux:**
 ```bash
