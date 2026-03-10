@@ -30,7 +30,7 @@ It also includes:
 │   ├── resources.py       # MCP resource (Excel reader)
 │   ├── context.py         # Prompt builder
 │   ├── llm.py             # LLM client (OpenAI-compatible API)
-│   ├── evaluation.py      # Semantic similarity evaluation
+│   ├── evaluation.py      # LangCheck metric evaluation
 │   ├── storage.py         # File I/O (save outputs, load references)
 │   ├── schemas.py         # Pydantic input/output models
 │   ├── utils.py           # Keyword extraction, output normalization
@@ -145,16 +145,14 @@ Opens at `http://localhost:8000`.
 ### View results in the dashboard
 
 - Side-by-side German/English generated texts
-- Semantic similarity evaluation scores
+- Semantic similarity, Factual Consistency, Rogue-L
 - Reference text comparison
 - Downloadable JSON outputs and reference files
 
 ## Evaluation
 
-Generated texts are evaluated against human-written references using cosine similarity of sentence embeddings:
+Generated texts are evaluated against human-written references using LangCheck semantic similarity , factual consistency and Rogue-L
 
-- **Model:** paraphrase-multilingual-MiniLM-L12-v2
-- **Method:** Cosine similarity between generated and reference text embeddings
 - **Runs locally** — no external API needed for evaluation
 
 Place reference texts as `.txt` files in `src/data/references/` named by the project abbreviation (e.g., `REACH.txt`).
@@ -163,7 +161,7 @@ Place reference texts as `.txt` files in `src/data/references/` named by the pro
 
 - **FastMCP** — MCP server framework
 - **OpenAI API** (GWDG endpoint) — Text generation
-- **Langcheck** — Semantic similarity and factual consistency
+- **Langcheck** — Semantic similarity, factual consistency and Rogur-L
 - **FastAPI + Jinja2** — Results output data dashboard
 - **Pandas** — Excel data processing
 - **Pydantic** — Input/output validation
