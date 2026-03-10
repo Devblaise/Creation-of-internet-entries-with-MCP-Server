@@ -9,9 +9,6 @@ This project provides two MCP tools:
 - **generate_project_text** — Takes project metadata and generates a structured project page description and faculty teaser in multiple languages.
 - **generate_project_text_from_project_id** — Looks up a project by its abbreviation (Abkürzung) from the Excel data and calls the first tool automatically.
 
-It also includes:
-
-- **Semantic evaluation** using sentence-transformers to compare generated text against human-written references.
 - **FastAPI dashboard** for viewing results, evaluation scores, and downloading outputs.
 
 ## Project Structure
