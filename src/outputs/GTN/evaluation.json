@@ -1,33 +1,9 @@
 {
   "project_id": "GTN",
-  "semantic_similarity": 0.9328,
-  "embedding_details": {
-    "model": "paraphrase-multilingual-MiniLM-L12-v2",
-    "dimensions": 384,
-    "generated_embedding_sample": [
-      0.2255,
-      -0.0179,
-      -0.0217,
-      -0.2621,
-      -0.0822,
-      0.0803,
-      -0.2605,
-      0.143,
-      0.091,
-      0.0887
-    ],
-    "reference_embedding_sample": [
-      0.2191,
-      -0.0171,
-      0.0086,
-      -0.2254,
-      -0.1083,
-      -0.0704,
-      -0.2116,
-      0.068,
-      0.198,
-      0.1633
-    ]
+  "metrics": {
+    "semantic_similarity": 0.9383,
+    "factual_consistency": 0.764,
+    "rouge_l": 0.3789
   },
   "reference_excerpt": "Computerspiele sind beliebt – und ein Wachstumsmarkt mit enormem Potenzial. Nordrhein-Westfalen hat sich in den vergangenen Jahren zu einem bedeutenden Games-Standort innerhalb Deutschlands entwickelt. Die Forschung im Bereich Games Technology findet jedoch noch individuell an den jeweiligen Hochsch"
 }

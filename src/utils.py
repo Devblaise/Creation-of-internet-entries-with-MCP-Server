@@ -1,8 +1,10 @@
 # keywords are extracted from these columns
+#_KEYWORD_COLS = ("Forschungsfelder", "Organisationseinheiten der Projektleitungen")
 _KEYWORD_COLS = ("Kooperationspartner", "Organisationseinheiten der Projektleitungen")
+#_KEYWORD_COLS = ()
 
 def extract_keywords(project: dict) -> list[str]:
-    """Extract keywords from Kooperationspartner and Organisationseinheiten der Projektleitungen columns."""
+    """Extract thematic keywords from Forschungsfelder and Organisationseinheiten der Projektleitungen columns."""
     parts = [
         kw.strip()
         for col in _KEYWORD_COLS

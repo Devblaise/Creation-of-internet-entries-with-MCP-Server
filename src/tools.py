@@ -1,5 +1,5 @@
 from mcp_app import mcp
-from schemas import (GenerateProjectTextInput, GenerateProjectTextOutput, GeneratedText)
+from schemas import (GenerateProjectTextInput, GenerateProjectTextOutput, GeneratedText, TokenUsage)
 from context import build_context
 from llm import generate_text_from_context
 from resources import projects_resource
@@ -37,7 +37,9 @@ async def generate_project_text(
     
     #--- Invoke and Generate text via LLM (async) ---
     logging.info("Sending prompt to OpenAI API...")
-    raw_response = await generate_text_from_context(prompt)
+    llm_result = await generate_text_from_context(prompt)
+    raw_response = llm_result["text"]
+    token_usage = llm_result["token_usage"]
     logging.info(f"LLM response received ({len(raw_response)} characters).")
     
     try:
@@ -89,6 +91,7 @@ async def generate_project_text(
         faculty_teaser=faculty_teaser,
         used_keywords=request.keywords,
         warnings=parsed.get("warnings"),
+        token_usage=TokenUsage(**token_usage) if token_usage else None,
     )
     
     #--- Evaluation (optional) if reference text provided ---

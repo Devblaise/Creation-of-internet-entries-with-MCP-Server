@@ -31,6 +31,13 @@
     <div class="main">
         <div class="header">
             <h1>{{ project_id }}</h1>
+            {% if output.token_usage %}
+            <div class="token-usage">
+                <span>Prompt: <strong>{{ output.token_usage.prompt_tokens }}</strong></span>
+                <span>Completion: <strong>{{ output.token_usage.completion_tokens }}</strong></span>
+                <span>Total: <strong>{{ output.token_usage.total_tokens }}</strong></span>
+            </div>
+            {% endif %}
         </div>
 
         <!-- Tabs -->
@@ -117,50 +124,75 @@
 
         <!-- Tab: Evaluation -->
         <div id="tab-eval" class="tab-content">
-            {% if evaluation and evaluation.semantic_similarity is defined %}
+            {% if evaluation and evaluation.metrics %}
+            {% set m = evaluation.metrics %}
+
+            <!-- Semantic Similarity -->
+            {% set score = m.semantic_similarity %}
+            {% if score >= 0.85 %}{% set level = "very-high" %}{% set level_text = "Very High" %}
+            {% elif score >= 0.70 %}{% set level = "high" %}{% set level_text = "High" %}
+            {% elif score >= 0.50 %}{% set level = "moderate" %}{% set level_text = "Moderate" %}
+            {% else %}{% set level = "low" %}{% set level_text = "Low" %}{% endif %}
             <div class="card">
                 <h3>Semantic Similarity</h3>
-                {% set score = evaluation.semantic_similarity %}
-                {% if score >= 0.85 %}
-                    {% set level = "very-high" %}
-                    {% set level_text = "Very High" %}
-                {% elif score >= 0.70 %}
-                    {% set level = "high" %}
-                    {% set level_text = "High" %}
-                {% elif score >= 0.50 %}
-                    {% set level = "moderate" %}
-                    {% set level_text = "Moderate" %}
-                {% else %}
-                    {% set level = "low" %}
-                    {% set level_text = "Low" %}
-                {% endif %}
-
                 <div class="score-display">
                     <div class="score-circle score-{{ level }}">{{ "%.2f"|format(score) }}</div>
                     <div class="score-label">
-                        <strong>{{ level_text }} similarity</strong><br>
-                        Cosine similarity between generated and reference text embeddings.
-                        1.0 = identical meaning, 0.0 = no semantic overlap.
+                        <strong>{{ level_text }}</strong><br>
+                        Meaning-level similarity between generated and reference text.
+                        1.0 = identical meaning, 0.0 = no overlap.
                     </div>
                 </div>
-
                 <div class="progress-bar">
                     <div class="progress-fill score-{{ level }}" style="width: {{ (score * 100)|int }}%"></div>
                 </div>
-
-                {% if evaluation.embedding_details %}
-                <div class="detail-row">
-                    <div>Model: <span>{{ evaluation.embedding_details.model }}</span></div>
-                    <div>Dimensions: <span>{{ evaluation.embedding_details.dimensions }}</span></div>
-                </div>
-
-                <details>
-                    <summary>Embedding samples (first 10 dimensions)</summary>
-                    <pre>Generated: {{ evaluation.embedding_details.generated_embedding_sample }}
-Reference: {{ evaluation.embedding_details.reference_embedding_sample }}</pre>
-                </details>
-                {% endif %}
             </div>
+
+            <!-- Factual Consistency -->
+            {% if m.factual_consistency is not none %}
+            {% set score = m.factual_consistency %}
+            {% if score >= 0.85 %}{% set level = "very-high" %}{% set level_text = "Very High" %}
+            {% elif score >= 0.70 %}{% set level = "high" %}{% set level_text = "High" %}
+            {% elif score >= 0.50 %}{% set level = "moderate" %}{% set level_text = "Moderate" %}
+            {% else %}{% set level = "low" %}{% set level_text = "Low" %}{% endif %}
+            <div class="card">
+                <h3>Factual Consistency</h3>
+                <div class="score-display">
+                    <div class="score-circle score-{{ level }}">{{ "%.2f"|format(score) }}</div>
+                    <div class="score-label">
+                        <strong>{{ level_text }}</strong><br>
+                        How well the generated text stays grounded when compared to the human-written reference description.
+                        Low scores indicate the LLM may have added content not present in the reference.
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill score-{{ level }}" style="width: {{ (score * 100)|int }}%"></div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ROUGE-L -->
+            {% if m.rouge_l is not none %}
+            {% set score = m.rouge_l %}
+            {% if score >= 0.50 %}{% set level = "very-high" %}{% set level_text = "Very High" %}
+            {% elif score >= 0.35 %}{% set level = "high" %}{% set level_text = "High" %}
+            {% elif score >= 0.20 %}{% set level = "moderate" %}{% set level_text = "Moderate" %}
+            {% else %}{% set level = "low" %}{% set level_text = "Low" %}{% endif %}
+            <div class="card">
+                <h3>ROUGE-L</h3>
+                <div class="score-display">
+                    <div class="score-circle score-{{ level }}">{{ "%.2f"|format(score) }}</div>
+                    <div class="score-label">
+                        <strong>{{ level_text }}</strong><br>
+                        Longest common subsequence overlap between generated and reference text.
+                        Measures how much wording is shared between the two texts.
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill score-{{ level }}" style="width: {{ (score * 100)|int }}%"></div>
+                </div>
+            </div>
+            {% endif %}
 
             {% if evaluation.reference_excerpt %}
             <div class="card">
@@ -168,6 +200,9 @@ Reference: {{ evaluation.embedding_details.reference_embedding_sample }}</pre>
                 <div class="text-content">{{ evaluation.reference_excerpt }}</div>
             </div>
             {% endif %}
+
+            {% elif evaluation and evaluation.reason %}
+            <div class="info">{{ evaluation.reason }}</div>
 
             {% else %}
             <div class="info">

@@ -56,7 +56,7 @@ It also includes:
 2. Fork the repo or click **Code → Download ZIP**
 3. Extract the ZIP to a folder if downloaded
 
-### 2. Install UV (Recommended)
+### 2. Install UV
 
 **macOS/Linux:**
 ```bash
@@ -122,28 +122,6 @@ uvicorn app:app
 Opens at `http://localhost:8000`. where you view generated outputs
 
 
-
-### With Docker (alternative)
-
-- **Linux:** You only need the Docker Engine (`sudo apt install docker.io` or similar) — no Desktop app required.
-- **Windows:** Install [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop/) — uses WSL 2 or Hyper-V.
-
-Once installed, verify with: `docker --version`
-
-#### Build the image
-
-```bash
-cd "BA Creation of internet entries with MCP Server"
-docker build -t creation-of-internet-entries-with-mcp-server .
-```
-
-#### Run the MCP server (with Inspector UI)
-
-```bash
-docker run -p 6274:6274 --env-file .env creation-of-internet-entries-with-mcp-server \
-  uv run mcp dev src/server.py --host 0.0.0.0
-```
-
 #### Generate text for a project
 
 In the MCP Inspector, call the `generate_project_text_from_project_id` tool with:
@@ -185,9 +163,8 @@ Place reference texts as `.txt` files in `src/data/references/` named by the pro
 
 - **FastMCP** — MCP server framework
 - **OpenAI API** (GWDG endpoint) — Text generation
-- **sentence-transformers** — Semantic similarity evaluation
+- **Langcheck** — Semantic similarity and factual consistency
 - **FastAPI + Jinja2** — Results output data dashboard
 - **Pandas** — Excel data processing
 - **Pydantic** — Input/output validation
-- **Docker** — Containerization
 

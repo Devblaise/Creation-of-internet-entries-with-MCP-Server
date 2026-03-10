@@ -48,21 +48,13 @@ def build_context(request: GenerateProjectTextInput) -> str:
 
     1. Project Page Description
       - Length: 400–500 words
-      - Structure with EXACTLY these section headers (using ### markdown):
-
-        For German (de):
-          ### Motivation
-          ### Forschungsziele
-          ### Gesellschaftliche Relevanz
-          ### Erwarteter Einfluss
-
-        For English (en):
-          ### Motivation
-          ### Research Goals
-          ### Societal Relevance
-          ### Expected Impact
-
-      - Use the EXACT headers above. Do NOT rename, reorder, or skip any section.
+      - Write as exactly 4 separate paragraphs — NO section headers or markdown headings.
+      - Separate each paragraph with a blank line (\n\n).
+      - Each paragraph covers one topic in order, without labelling it:
+        1. Why the project exists (motivation/background)
+        2. What the project does (research goals)
+        3. Why it matters to society (societal relevance)
+        4. What outcomes are expected (expected impact)
 
     2. Faculty Teaser
       - Length: 50–100 words
@@ -100,10 +92,7 @@ def build_context(request: GenerateProjectTextInput) -> str:
     - Avoid jargon — if technical terms are necessary, briefly explain them
     - Short sentences and paragraphs for easy readability
     - Active voice preferred over passive voice
-    - Engaging and informative tone, like a well-written magazine article
     - Preserve specific project details when available
-    - No academic phrasing (avoid "furthermore", "moreover", "it should be noted")
-    - No proposal language ("we aim to", "this project seeks to")
     - No unverifiable claims
     - Target reading level: general public with interest in science/technology
 
